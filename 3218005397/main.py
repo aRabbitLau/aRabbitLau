@@ -6,7 +6,7 @@ import re
 
 # Jaccard相似度
 class JaccardSim(object):
-    # 构造函数，创建self对象
+    # 构造函数
     def __init__(self, a, b):
         self.c1 = a
         self.c2 = b
@@ -35,3 +35,21 @@ class JaccardSim(object):
         sim = float(intersection) / union if union != 0 else 0
         return sim
 
+
+# 测试
+if __name__ == '__main__':
+    p1 = input("输入论文原文的文件的绝对路径：")
+    p2 = input("输入抄袭版论文的文件的绝对路径：")
+    if not jieba.os.path.exists(p1):
+        print("原文路径输入错误")
+        exit()
+    if not jieba.os.path.exists(p2):
+        print("待查重文章路径输入错误")
+        exit()
+    with open(p1, 'r', encoding='UTF-8') as x, \
+            open(p2, 'r', encoding='UTF-8') as y:
+        a = x.read()
+        b = y.read()
+        similarity = JaccardSim(a, b)
+        similarity = similarity.main()
+        print('相似度: %.2f%%' % (similarity * 100))
